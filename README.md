@@ -9,15 +9,15 @@ Dépendances: zenity
 
 **Principe:**
 
-* Créer un répertoire dans le HOME et y coller le script launch
+* Créer un répertoire dans le HOME et y coller le script launch.sh
 
 * Y créer les fichiers .desktop en leur donnant un nom court (sur 2 caractères par exemple)
 
-* Ajouter au tableau de bord, un nouveau lanceur (ou alors créer un raccourci clavier) pointant sur le script launch
+* Créer un nouveau lanceur (dans le tableau de bord ou en raccourci clavier) pointant sur le script launch.sh
 
 **Utilisation:**
 
-Désormais en cliquant sur ce lanceur (dans le tableau de bord), une boîte de dialogue s'ouvre et vous propose de saisir le nom d'un .desktop , 
+Désormais en exécutant sur ce lanceur (tableau de bord ou raccourci clavier), une boîte de dialogue s'ouvre et vous propose de saisir le nom d'un .desktop , 
 le script se chargera d'exécuter l'application correspondante.
 
 Pour résumer, ça sert à exécuter une application en tapant 2 lettres.
@@ -34,6 +34,7 @@ Type=Application
 Icon=accessories-calculator
 StartupNotify=true
 NoDisplay=true 
+Path=/
 ```
 
 **Conseil:**
