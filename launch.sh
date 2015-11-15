@@ -1,7 +1,7 @@
 #!/bin/bash
 # auteur : ledudulela
-# version: 1.1
-# màj : 2015-11-12 16:12 
+# version: 1.2
+# màj : 2015-11-13 13:00 
 # objet: lance un fichier.desktop se trouvant dans le répertoire du script (cf xdg-open OU gtk-launch)
 # dépendances: zenity
 #
@@ -45,23 +45,26 @@
 # ----------------------------------------------------------------------------------------
 currentDir=$(dirname "$0") 
 #zenity --info --text="$currentDir"
-
-dataFile="$currentDir/launch.dat"
-lastEntry=''
-if [ -f "$dataFile" ]; then # teste si le fichier existe
-	lastEntry=`cat "$dataFile"`
-fi
-
-txtEntry=$(zenity --entry --entry-text="$lastEntry" --text="Entrez le nom du lanceur à exécuter (sans .desktop) :" --title="Lanceur" --width=400 --height=40 2>/dev/null)
-if [ $? == 1 ]; then # teste si le bouton [Annuler] a été cliqué
-	exit 10
-else
-	if [ ${#txtEntry} == 0 ]; then  # teste si la chaine est vide
-		zenity --info --text="Paramètre non valide."
-		exit 20
+#dataFile="$currentDir/launch.dat"
+dataFile="/tmp/launch.dat"
+if [ -z $1 ]; then # teste si la chaine est vide
+	lastEntry=''
+	if [ -f "$dataFile" ]; then # teste si le fichier existe
+		lastEntry=`cat "$dataFile"`
 	fi
-fi
 
+	txtEntry=$(zenity --entry --entry-text="$lastEntry" --text="Entrez le nom du lanceur à exécuter (sans .desktop) :" --title="Lanceur" --width=400 --height=40 2>/dev/null)
+	if [ $? == 1 ]; then # teste si le bouton [Annuler] a été cliqué
+		exit 10
+	else
+		if [ ${#txtEntry} == 0 ]; then  # teste si la chaine est vide
+			zenity --info --text="Paramètre non valide."
+			exit 20
+		fi
+	fi
+else
+	txtEntry=$1
+fi
 # ---------------------------------------------------
 fileName=$(echo "$txtEntry" | awk -F " " '{print $1}') # espace sépare le fileName des arguments
 p=${#fileName} # nbr de caracteres de $fileName
@@ -91,7 +94,14 @@ filePath="${currentDir}/${fileName}.desktop"
 if [ -f ${filePath} ]; then
 	launcherPath=${filePath}
 fi
-#zenity --info --text="${filePath}-${launcherPath}"
+
+filePath="${fileName}.desktop"
+if [ -f ${filePath} ]; then
+	launcherPath=${filePath}
+fi
+
+#fileName=$(basename "$filePath") 
+#zenity --info --text="${filePath} \n ${launcherPath}"
 
 # ---------------------------------------------------
 if [ -z ${launcherPath} ]; then # teste si la chaine est vide
