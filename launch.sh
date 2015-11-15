@@ -1,7 +1,7 @@
 #!/bin/bash
 # auteur : ledudulela
-# version: 1.2
-# màj : 2015-11-13 13:00 
+# version: 1.3
+# màj : 2015-11-15 19:04 
 # objet: lance un fichier.desktop se trouvant dans le répertoire du script (cf xdg-open OU gtk-launch)
 # dépendances: zenity
 #
@@ -28,6 +28,13 @@
 # /usr/local/share/applications
 # /usr/share/applications 
 #
+# ligne de commandes:
+# *******************
+# bien que ce ne soit pas sa fonction première, le script accepte deux paramètres en ligne de commandes
+# le premier: nom court du fichier.desktop (sans le .desktop)
+# le second (optionnel): répertoire de travail, dans lequel le script ira chercher le fichier.desktop
+# exemple: launch appli /tmp
+#
 # exemple d'un fichier xy.desktop pour l'application "monappli"
 # ****************************************************************
 # [Desktop Entry]
@@ -43,11 +50,12 @@
 # NoDisplay=false 	(optionnel)
 #
 # ----------------------------------------------------------------------------------------
-currentDir=$(dirname "$0") 
+currentDir=$(dirname "$0")
+workingDir=''
 #zenity --info --text="$currentDir"
 #dataFile="$currentDir/launch.dat"
 dataFile="/tmp/launch.dat"
-if [ -z $1 ]; then # teste si la chaine est vide
+if [ -z $1 ]; then # teste si le param 1 est vide
 	lastEntry=''
 	if [ -f "$dataFile" ]; then # teste si le fichier existe
 		lastEntry=`cat "$dataFile"`
@@ -64,7 +72,13 @@ if [ -z $1 ]; then # teste si la chaine est vide
 	fi
 else
 	txtEntry=$1
+	if [ -z $2 ]; then # teste si le param 2 est vide
+		workingDir=''
+	else
+		workingDir=$2
+	fi
 fi
+
 # ---------------------------------------------------
 fileName=$(echo "$txtEntry" | awk -F " " '{print $1}') # espace sépare le fileName des arguments
 p=${#fileName} # nbr de caracteres de $fileName
@@ -95,9 +109,16 @@ if [ -f ${filePath} ]; then
 	launcherPath=${filePath}
 fi
 
-filePath="${fileName}.desktop"
-if [ -f ${filePath} ]; then
-	launcherPath=${filePath}
+if [ -z ${workingDir} ]; then # teste si la chaine est vide
+	filePath="${fileName}.desktop"
+	if [ -f ${filePath} ]; then
+		launcherPath=${filePath}
+	fi
+else
+	filePath="${workingDir}/${fileName}.desktop"
+	if [ -f ${filePath} ]; then
+		launcherPath=${filePath}
+	fi
 fi
 
 #fileName=$(basename "$filePath") 
