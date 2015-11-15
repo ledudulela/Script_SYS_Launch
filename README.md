@@ -45,3 +45,16 @@ La valeur Name doit être identique au nom du fichier.desktop
 
 mon raccourci clavier: touche Windows (à droite de la barre espace) et touche X
 
+**Historique:**
+
+version 1.3
+- possibilité de lancer le script en ligne de commandes avec 2 arguments.
+
+$ launch nom_appli rep_de_travail
+
+version 1.2
+- possibilité de lancer le script en ligne de commandes avec 1 argument.
+
+$ launch nom_appli
+
+
