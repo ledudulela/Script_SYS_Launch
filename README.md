@@ -9,7 +9,7 @@ Dépendances: zenity
 
 **Principe:**
 
-* Créer un répertoire dans le HOME et y coller le script launch.sh
+* Créer un répertoire Launch dans le $HOME et y coller le script launch.sh (il peut également se trouver dans /usr/local/bin)
 
 * Y créer les fichiers .desktop en leur donnant un nom court (sur 2 caractères par exemple)
 
@@ -45,7 +45,15 @@ La valeur Name doit être identique au nom du fichier.desktop
 
 mon raccourci clavier: touche Windows (à droite de la barre espace) et touche X
 
+**Rappel:**
+
+Lorsqu'il est placé dans le répertoire /usr/local/bin , le script doit se nommer launch (sans extension) et être rendu exécutable.
+
 **Historique:**
+
+version 1.4
+- le script recherche également le lanceur dans les répertoires $HOME/Bureau et $HOME/Lanceurs ( en plus des répertoires
+ $PWD (le répertoire du script) , $HOME/.local/share/applications , /usr/local/share/applications , /usr/share/applications )
 
 version 1.3
 - possibilité de lancer le script en ligne de commandes avec 2 arguments.

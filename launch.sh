@@ -1,7 +1,7 @@
 #!/bin/bash
 # auteur : ledudulela
-# version: 1.3
-# màj : 2015-11-15 19:04 
+# version: 1.4
+# màj : 2015-11-30 19:50 
 # objet: lance un fichier.desktop se trouvant dans le répertoire du script (cf xdg-open OU gtk-launch)
 # dépendances: zenity
 #
@@ -25,6 +25,7 @@
 # le script cherche le fichier.desktop dans les répertoires suivants:
 # $PWD (le répertoire du script)
 # $HOME/.local/share/applications
+# $HOME/Bureau,$HOME/Lanceurs,$HOME/Launchers,$HOME/Raccourcis
 # /usr/local/share/applications
 # /usr/share/applications 
 #
@@ -100,6 +101,26 @@ if [ -f ${filePath} ]; then
 fi
 
 filePath="$HOME/.local/share/applications/${fileName}.desktop"
+if [ -f ${filePath} ]; then
+	launcherPath=${filePath}
+fi
+
+filePath="$HOME/Bureau/${fileName}.desktop"
+if [ -f ${filePath} ]; then
+	launcherPath=${filePath}
+fi
+
+filePath="$HOME/Raccourcis/${fileName}.desktop"
+if [ -f ${filePath} ]; then
+	launcherPath=${filePath}
+fi
+
+filePath="$HOME/Launchers/${fileName}.desktop"
+if [ -f ${filePath} ]; then
+	launcherPath=${filePath}
+fi
+
+filePath="$HOME/Lanceurs/${fileName}.desktop"
 if [ -f ${filePath} ]; then
 	launcherPath=${filePath}
 fi
